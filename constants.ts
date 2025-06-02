@@ -23,5 +23,5 @@ export const DERIVATION_PATH_ED25519 = "m/44'/3030'/0'/0'/0'"; // Common for Hed
 export const MIN_PASSWORD_LENGTH = 8;
 
 // Theme Constants
-export const DEFAULT_THEME_NAME = 'whale';
+export const DEFAULT_THEME_NAME = 'Whale';
 export const THEME_STORAGE_KEY = 'helixWalletThemePreference';
