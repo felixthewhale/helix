@@ -1,0 +1,5 @@
+{
+  "name": "Helix - Hedera Wallet",
+  "description": "A minimalistic Hedera Hashgraph wallet for managing accounts and sending HBAR... Securely stores private keys locally using encryption.",
+  "requestFramePermissions": []
+}

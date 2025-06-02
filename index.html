@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HELIX wallet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Initial theme application to prevent FOUC
+    // This script runs before React and Tailwind's full initialization.
+    // It sets CSS variables based on stored preference or default.
+    (function() {
+      const THEME_STORAGE_KEY = 'helixWalletThemePreference';
+      const DEFAULT_THEME_NAME = 'whale'; // Updated default theme
+
+      // Define themes here (simplified for this script)
+      // Make sure these match the structure and keys in themes.ts
+      const themes = {
+        balancedLedger: {
+          name: 'Balanced Ledger',
+          colors: {
+            primaryBg: '#F5F5DC',
+            accentGreen: '#2ECC71',
+            accentGrey: '#7F8C8D',
+            accentRed: '#E74C3C',
+            textPrimary: '#34495E',
+            textSecondary: '#95A5A6',
+            cardBg: '#FFFFFF',
+            inputBg: '#F5F5DC',
+            textOnAccent: '#FFFFFF',
+            borderColor: '#7F8C8D', // Updated borderColor
+          }
+        },
+        oledDark: {
+          name: 'OLED Dark',
+          colors: {
+            primaryBg: '#000000',
+            accentGreen: '#34D399',
+            accentGrey: '#4B5563',
+            accentRed: '#F87171',
+            textPrimary: '#E5E7EB',
+            textSecondary: '#9CA3AF',
+            cardBg: '#111827',
+            inputBg: '#1F2937',
+            textOnAccent: '#FFFFFF',
+            borderColor: '#374151',
+          }
+        },
+        whale: { // Added Whale theme
+          name: 'Whale',
+          colors: {
+            primaryBg: '#2C3E50',
+            accentGreen: '#F1C40F',
+            accentGrey: '#5B7B7B',
+            accentRed: '#D35400',
+            textPrimary: '#ECF0F1',
+            textSecondary: '#BDC3C7',
+            cardBg: '#34495E',
+            inputBg: '#34495E',
+            textOnAccent: '#2C3E50',
+            borderColor: '#5B7B7B',
+          }
+        }
+      };
+
+      function applyThemeColors(colors) {
+        const root = document.documentElement;
+        if (colors) {
+          for (const [key, value] of Object.entries(colors)) {
+            // Convert camelCase to kebab-case for CSS variable names
+            const kebabKey = key.replace(/([A-Z])/g, (match) => `-${match.toLowerCase()}`);
+            root.style.setProperty(`--theme-color-${kebabKey}`, value);
+          }
+          // Explicitly set body background and text color early.
+          document.body.style.backgroundColor = colors.primaryBg;
+          document.body.style.color = colors.textPrimary;
+        }
+      }
+
+      let currentThemeName = localStorage.getItem(THEME_STORAGE_KEY);
+      if (!currentThemeName || !themes[currentThemeName]) {
+        currentThemeName = DEFAULT_THEME_NAME;
+      }
+      
+      const themeToApply = themes[currentThemeName];
+      if (themeToApply) {
+        applyThemeColors(themeToApply.colors);
+      }
+    })();
+
+    // Tailwind CSS Configuration using CSS Variables
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary-bg': 'var(--theme-color-primary-bg)',
+            'accent-green': 'var(--theme-color-accent-green)',
+            'accent-grey': 'var(--theme-color-accent-grey)',
+            'accent-red': 'var(--theme-color-accent-red)',
+            'text-primary': 'var(--theme-color-text-primary)',
+            'text-secondary': 'var(--theme-color-text-secondary)',
+            'card-bg': 'var(--theme-color-card-bg)',
+            'input-bg': 'var(--theme-color-input-bg)',
+            'text-on-accent': 'var(--theme-color-text-on-accent)',
+            'border-color': 'var(--theme-color-border-color)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      /* Base background and text are now applied by the script above or Tailwind via CSS vars */
+    }
+    /* For Webkit browsers like Chrome/Safari - Consider theming these too later */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--theme-color-input-bg, #e0e0d1); /* Fallback */
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--theme-color-accent-grey, #7F8C8D); /* Fallback */
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--theme-color-accent-grey-hover, #6a7778); /* Needs a hover var or derive */
+    }
+    /* For Firefox - Consider theming these too later */
+    * {
+      scrollbar-width: thin;
+      /* scrollbar-color: var(--theme-color-accent-grey) var(--theme-color-input-bg); */
+      /* Firefox scrollbar theming with CSS vars can be tricky. Revisit if necessary. */
+       scrollbar-color: #7F8C8D #e0e0d1; /* Kept original for now due to complexity with vars here */
+
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "@hashgraph/sdk": "https://esm.sh/@hashgraph/sdk@^2.65.1",
+    "crypto-js/": "https://esm.sh/crypto-js@^4.2.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-primary-bg text-text-primary">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
