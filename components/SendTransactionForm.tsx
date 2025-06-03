@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 import { hederaService } from '../services/hederaService';
-import { Hbar, PrivateKey } from '@hashgraph/sdk'; 
+import { Hbar, PrivateKey, HbarUnit } from '@hashgraph/sdk'; // Added HbarUnit
 import LoadingSpinner from './LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,7 +48,7 @@ const SendTransactionForm: React.FC = () => {
         activeUserAccount.id,
         activeUserAccount.privateKey, 
         recipientAccountId,
-        Hbar.from(hbarAmount),
+        Hbar.from(hbarAmount, HbarUnit.Hbar), // Explicitly added HbarUnit.Hbar
         memo
       );
       

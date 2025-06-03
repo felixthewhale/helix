@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface ModalProps {
@@ -20,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-text-primary bg-opacity-75 transition-opacity duration-300 ease-in-out"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-bg transition-opacity duration-300 ease-in-out"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? "modal-title" : undefined}
